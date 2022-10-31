@@ -1,0 +1,8 @@
+*.state*
+__debug_bin
+.env
+cover.out
+.VERSION
+data/
+clipboardsync
+clipboardsync.exe
