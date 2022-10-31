@@ -2,6 +2,7 @@ version: "3.0"
 services:
   nats:
     image: mheers/nats-auto-server:2.9.0-alpine3.16
+    restart: unless-stopped
     volumes:
       - "./data/nats/:/data"
       - ./config/mq/additional.conf:/nats/conf/additional.conf:ro

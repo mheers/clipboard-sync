@@ -12,5 +12,25 @@ func PrintInfo() {
 	figletStr := f.String()
 	fmt.Println(figletStr)
 	fmt.Println()
+}
 
+func MaskString(s string, mask rune, start, end int) string {
+	if start < 0 {
+		start = 0
+	}
+	if end > len(s) || end < 0 {
+		end = len(s)
+	}
+	if start > end {
+		start, end = end, start
+	}
+	return s[:start] + maskString(s[start:end], mask) + s[end:]
+}
+
+func maskString(s string, mask rune) string {
+	r := make([]rune, len(s))
+	for i := range r {
+		r[i] = mask
+	}
+	return string(r)
 }

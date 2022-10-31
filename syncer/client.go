@@ -76,7 +76,7 @@ func (r *Syncer) publishClipboardMessage(data string) {
 		return
 	}
 	latestPublishedMessage = data
-	fmt.Printf("Publishing new clipboard: %s\n", data)
+	fmt.Printf("Publishing new clipboard: %s\n", helpers.MaskString(data, '*', 2, -1))
 	err := r.mqConnection.Connection.Publish(fmt.Sprintf("instance.clipboard.%s", r.machineID), []byte(data))
 	if err != nil {
 		logrus.Error(err)
@@ -84,8 +84,8 @@ func (r *Syncer) publishClipboardMessage(data string) {
 }
 
 func (r *Syncer) handleClipboardMessage(msg *nats.Msg) {
-	logrus.Infof("MQ: Message on subject %s: %s", msg.Subject, msg.Data)
 	data := string(msg.Data)
+	logrus.Infof("MQ: Message on subject %s: %s", msg.Subject, helpers.MaskString(data, '*', 2, -1))
 	if data == latestReceivedMessage {
 		return
 	}
