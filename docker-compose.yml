@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   nats:
-    image: mheers/nats-auto-server:2.9.0-alpine3.16
+    image: mheers/nats-auto-server:2.10.22-alpine3.20
     restart: unless-stopped
     volumes:
       - "./data/nats/:/data"

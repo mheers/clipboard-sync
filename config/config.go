@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
+	"dario.cat/mergo"
 	"github.com/brianvoe/gofakeit/v5"
-	"github.com/imdario/mergo"
 	"github.com/mheers/clipboard-sync/helpers"
 	"github.com/sethvargo/go-envconfig"
 	"github.com/sirupsen/logrus"

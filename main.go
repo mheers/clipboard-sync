@@ -1,8 +1,6 @@
 package main
 
 import (
-	_ "go.uber.org/automaxprocs"
-
 	"github.com/mheers/clipboard-sync/cmd"
 	"github.com/sirupsen/logrus"
 )

@@ -19,3 +19,4 @@ make create-credentials
 # TODO
 - [ ] directly read the .creds file
 - [x] add a way to specify the nats server
+- [ ] sync keyboard directly
