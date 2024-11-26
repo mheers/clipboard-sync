@@ -1,8 +1,10 @@
 *.state*
-__debug_bin
+__debug_bin*
 .env
+.env2
 cover.out
 .VERSION
 data/
 clipboardsync
 clipboardsync.exe
+*.creds

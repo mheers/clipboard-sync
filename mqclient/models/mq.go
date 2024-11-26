@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"log"
 	"time"
 
@@ -35,6 +36,15 @@ func NewMQClient(config *config.Config) (*MQClient, error) {
 }
 
 func getConnection(config *config.Config) (*nats.Conn, error) {
+	logrus.Debug("enabling feature 'Message Queue'")
+	if config.MQURI == "" {
+		return nil, errors.New("no MQURI found")
+	}
+
+	if config.MQCredsPath == "" && (config.MQUSeed == "" || config.MQJWT == "") {
+		return nil, errors.New("no MQCredsPath or MQUSeed/MQJWT found")
+	}
+
 	url := config.MQURI // e.g. "nats://localhost:4222"
 	logrus.Debugf("Connecting to nats mq url: %s", url)
 
@@ -48,18 +58,24 @@ func getConnection(config *config.Config) (*nats.Conn, error) {
 	opts := []nats.Option{
 		nats.Name("clipboardSyncclient Server"),
 	}
-	opts = append(opts, nats.Token(clipboardSyncJWT))
-	// opts = append(opts, )
 
-	jwtCB := func() (string, error) {
-		return clipboardSyncJWT, nil
+	if config.MQCredsPath != "" {
+		opts = append(opts, nats.UserCredentials(config.MQCredsPath))
+	} else {
+
+		opts = append(opts, nats.Token(clipboardSyncJWT))
+		// opts = append(opts, )
+
+		jwtCB := func() (string, error) {
+			return clipboardSyncJWT, nil
+		}
+		sigCB := func(nonce []byte) ([]byte, error) {
+			kp, _ := nkeys.FromSeed(uSeed)
+			sig, _ := kp.Sign(nonce)
+			return sig, nil
+		}
+		opts = append(opts, nats.UserJWT(jwtCB, sigCB))
 	}
-	sigCB := func(nonce []byte) ([]byte, error) {
-		kp, _ := nkeys.FromSeed(uSeed)
-		sig, _ := kp.Sign(nonce)
-		return sig, nil
-	}
-	opts = append(opts, nats.UserJWT(jwtCB, sigCB))
 
 	opts = append(opts, nats.Timeout(reconnectDelay*3))
 	opts = append(opts, nats.ReconnectWait(reconnectDelay))

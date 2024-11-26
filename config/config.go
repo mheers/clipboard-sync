@@ -14,9 +14,10 @@ import (
 
 // Config describes the config
 type Config struct {
-	MQJWT   string `env:"CLIPBOARD_SYNC_MQ_JWT"`
-	MQURI   string `env:"CLIPBOARD_SYNC_MQ_URI"`
-	MQUSeed string `env:"CLIPBOARD_SYNC_MQ_USEED"`
+	MQJWT       string `env:"CLIPBOARD_SYNC_MQ_JWT"`
+	MQURI       string `env:"CLIPBOARD_SYNC_MQ_URI"`
+	MQUSeed     string `env:"CLIPBOARD_SYNC_MQ_USEED"`
+	MQCredsPath string `env:"CLIPBOARD_SYNC_MQ_CREDS_PATH"`
 }
 
 // OverlayConfigWithEnv overlays the config with values from the env

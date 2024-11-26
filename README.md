@@ -34,6 +34,7 @@ The approach will use
 
 
 # TODO
-- [ ] directly read the .creds file
+- [x] directly read the .creds file
 - [x] add a way to specify the nats server
 - [ ] sync keyboard directly
+- [ ] use headless chrome to sync the clipboard

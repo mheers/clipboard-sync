@@ -10,7 +10,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}",
-            "envFile": "${workspaceFolder}/.env",
+            "envFile": "${workspaceFolder}/.env2",
             "args": [
                 "start",
                 "-l",
